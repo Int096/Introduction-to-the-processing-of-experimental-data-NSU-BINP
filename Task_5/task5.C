@@ -62,7 +62,7 @@ void GeneratorOne(TRandom3 *rnd)
     TString title = "Distribution 2#upoint x#upoint exp(-x^{2}) for N = " + Nstr;
     histogramOne->SetTitle(title);
 
-    histogramOne->Draw();
+    histogramOne->Draw("E");
     canvas->SaveAs("One.png");
 }
 
@@ -128,13 +128,13 @@ void PrintHistograms(TRandom3 *rnd, UInt_t N, UInt_t count, Double_t exactMeanin
         ImportanceHistogram->Fill(ImportanceSampling(rnd, N));   
     }
     canvas2->cd(1);
-    RejectionHistogram->Draw();
+    RejectionHistogram->Draw("E");
 
     canvas2->cd(2);
-    AverageHistogram->Draw();
+    AverageHistogram->Draw("E");
 
     canvas2->cd(3);
-    ImportanceHistogram->Draw();
+    ImportanceHistogram->Draw("E");
 
     canvas2->SaveAs("Two.png");
 }
