@@ -1,0 +1,10 @@
+For 100 nBins sig = 1035 bkg = 965
+For 200 nBins sig = 1288 bkg = 712
+For 300 nBins sig = 1379 bkg = 621
+For 400 nBins sig = 500 bkg = 1500
+For 500 nBins sig = 1434 bkg = 566
+For 600 nBins sig = 1447 bkg = 553
+For 700 nBins sig = 1455 bkg = 545
+For 800 nBins sig = 1461 bkg = 539
+For 900 nBins sig = 1466 bkg = 534
+For 1000 nBins sig = 1469 bkg = 531
