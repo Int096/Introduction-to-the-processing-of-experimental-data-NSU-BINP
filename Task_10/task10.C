@@ -110,9 +110,6 @@ void FillHist(TH1D *hist, TString filename)
 
 void task10()
 {
-    gStyle->SetOptStat(0);
-    gStyle->SetOptFit(0);
-
     const Int_t nBins1 = 100;
     const Int_t nBins2 = 100;
     TH1D *histOne = new TH1D("histOne", "Distribution data from data_1.dat;Energy, [MeV];quantity",
@@ -131,7 +128,6 @@ void task10()
     {
         minuit->SetParameter(i, (*parNames.find(i)).second,
                              vstart[i], step[i], 0, 0);
-        std::cout << minuit->GetParameter(i) << std::endl;;
     }
 
     minuit->SetFCN(FitFcn);
@@ -159,7 +155,7 @@ void task10()
     }
 
     std::cout << "Number of Background events: " 
-        << (Int_t)(minParams[Bkg] * nBins1) << std::endl;
+        << histOne->GetEntries() - (Int_t)(minParams[Bkg] * nBins1) << std::endl;
 
     //std::cout << "Chi2 equal " << minuit->Chisquare(N_PAR, minParams) << std::endl;
     std::cout << "------------------------------" << std::endl;
@@ -175,7 +171,7 @@ void task10()
     fit2->SetParName(0, "Bkg");
 
     TFile *file = new TFile("newfile.root", "recreate");
-    TCanvas *canvas = new TCanvas("Canvas", "Fitting two Histogram", 10, 10, 700, 500);
+    TCanvas *canvas = new TCanvas("Canvas", "Fitting two Histogram", 10, 10, 1200, 600);
     canvas->Divide(2, 1);
 
     canvas->cd(1);

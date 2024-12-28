@@ -55,7 +55,7 @@ Double_t fitFunc(Double_t *x, Double_t *par)
     
     return 
     par[PScale] * TMath::Poisson(x[0], par[Pmean]) +
-    (150 - par[PScale]) * TMath::BreitWigner(x[0], par[BWMean], par[BWWidth]);
+    (150 - par[PScale])* TMath::BreitWigner(x[0], par[BWMean], par[BWWidth]);
 }
 
 void task12()

@@ -39,6 +39,14 @@ void yield::Loop()
 
     Int_t countCandidates = 0;
     Int_t candidatesNumber = 0;
+
+    TTree *Pi0CandTree = new TTree("Pi0CandidatesTree", "Tree of pi0 candidates");
+    Double_t PiMass[300], PiTheta[300], PiPhi[300];
+    Int_t PiN;
+    Pi0CandTree->Branch("Pi0Mass", PiMass, "Pi0Mass[300]/D");
+    Pi0CandTree->Branch("Pi0Theta", PiTheta, "Pi0Theta[300]/D");
+    Pi0CandTree->Branch("Pi0Phi", PiPhi, "Pi0Phi[300]/D");
+    Pi0CandTree->Branch("Pi0N", &PiN, "Pi0N/I");
     
     Long64_t nbytes = 0, nb = 0;
     for (Long64_t jentry=0; jentry<nentries;jentry++) {
@@ -54,6 +62,7 @@ void yield::Loop()
 
         TLorentzVector ph1(0,0,0,0), ph2(0,0,0,0);
 
+        PiN = 0;
         for (Int_t i = 0; i < (nph - 1); i++) {
             for (Int_t j = i + 1; j < nph; j++) {
                 using namespace TMath;
@@ -74,11 +83,21 @@ void yield::Loop()
                 histTheta->Fill((eta));
 
                 if ( (invariantMass >= 0.1) && ( invariantMass <= 0.2 ) ) {
+                    auto Pi0Direction = ph1.Vect() + ph2.Vect();
+
                     s[candidatesNumber] = invariantMass;
+                    //theta[candidatesNumber] = eta;
+
+                    PiMass[candidatesNumber] = invariantMass;
+                    PiTheta[candidatesNumber] = Pi0Direction.Theta();
+                    PiPhi[candidatesNumber] = Pi0Direction.Phi();
                     candidatesNumber++;
                     }
                 }
             }
+   
+        PiN = candidatesNumber;
+        Pi0CandTree->Fill();
    
         if ( 2 == candidatesNumber ) {
             histM->Fill(s[0]*1000); histM->Fill(s[1]*1000);
@@ -86,6 +105,8 @@ void yield::Loop()
             countCandidates++;
             }
         }
+
+    Pi0CandTree->Write();
 
     std::cout << "Count candidates: " << countCandidates << std::endl;
     

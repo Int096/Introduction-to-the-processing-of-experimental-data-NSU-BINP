@@ -51,7 +51,7 @@ void task5(UInt_t N = 100000, UInt_t count = 1000)
 // Генерация и вывод первой гистограммы
 void GeneratorOne(TRandom3 *rnd)
 {
-    TCanvas *canvas = new TCanvas("Histogram for one formula");
+    TCanvas *canvas = new TCanvas("c1", "Histogram for one formula", 800, 600);
     TH1D *histogramOne = new TH1D("histogramOne", "Distribution", 100, 0, 2.5);
 
     Int_t N = 100000;
@@ -111,7 +111,7 @@ Double_t ImportanceSampling(TRandom3 *rnd, const UInt_t N)
 
 void PrintHistograms(TRandom3 *rnd, UInt_t N, UInt_t count, Double_t exactMeaning)
 {
-    TCanvas *canvas2 = new TCanvas("Errors histograms");
+    TCanvas *canvas2 = new TCanvas("c2", "Errors Histograms", 800, 600);
     canvas2->Divide(2, 2);
    
     Double_t min = exactMeaning - 1/TMath::Sqrt(N);

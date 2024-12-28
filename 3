@@ -1,0 +1,39 @@
+#include <TH1.h>
+#include <TCanvas.h>
+
+#include <iostream>
+#include <fstream>
+
+void FillHist(TH1D *hist, TString filename)
+{
+    std::ifstream ifile(filename, std::ios::in); 
+    if (ifile.is_open())
+    {
+        Double_t n = 0;
+        Double_t x;
+        Int_t i = 1;
+        while (ifile >> x)
+        {
+            hist->SetBinContent(i, x); 
+            i++;
+        }
+    } else 
+    {
+        std::cerr << "File " << filename << " is not open!!!";
+        exit(-1);
+    }
+}
+
+void fft()
+{
+    TH1D *hist = new TH1D("hist", "FEU signal;[ns]", 500, 0, 500);
+    FillHist(hist, "dataFFT.dat");
+    
+    TH1 *hm = 0;
+    hm = hist->FFT(hm, "MAG");
+
+    TCanvas *c1 = new TCanvas("c1", "Distribution", 800, 600);
+    c1->Divide(2, 2);
+    c1->cd(1);
+    hist->Draw();
+}
